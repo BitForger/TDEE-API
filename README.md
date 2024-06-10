@@ -57,7 +57,7 @@ The response will be:
 
 ```json
 {
-  "tdee": 3200,
+  "maintenance_calories": 3200,
   "deficits": {
     "deficit_250": 2950,
     "deficit_500": 2700,
