@@ -19,6 +19,7 @@ func HandleTdeeDaily(ctx *fiber.Ctx) error {
 	ageParam := ctx.QueryInt("age")
 	sexParam := ctx.Query("sex")
 	activityLevelParam := ctx.Query("activity_level")
+	equation := ctx.Query("equation", "mifflin-st-jeor")
 
 	if ctx.Queries() == nil {
 		return ctx.Status(400).SendString("Missing query parameters")
@@ -33,10 +34,10 @@ func HandleTdeeDaily(ctx *fiber.Ctx) error {
 	var tdee float64
 	switch sexParam {
 	case "male":
-		tdee = GetMaleTdee(GetWeightInKg(weightParam), GetHeightInCm(heightParam), ageParam, activityLevelParam)
+		tdee = GetMaleTdee(GetWeightInKg(weightParam), GetHeightInCm(heightParam), ageParam, activityLevelParam, equation)
 
 	case "female":
-		tdee = GetFemaleTdee(GetWeightInKg(weightParam), GetHeightInCm(heightParam), ageParam, activityLevelParam)
+		tdee = GetFemaleTdee(GetWeightInKg(weightParam), GetHeightInCm(heightParam), ageParam, activityLevelParam, equation)
 	}
 
 	return ctx.JSON(fiber.Map{
