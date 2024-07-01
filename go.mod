@@ -3,7 +3,7 @@ module main
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.4
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/rs/zerolog v1.33.0
 )
 
