@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/rs/zerolog/log"
 	"math"
 	"strings"
 )
@@ -21,6 +22,8 @@ func HandleTdeeDaily(ctx *fiber.Ctx) error {
 	activityLevelParam := ctx.Query("activity_level")
 	equation := ctx.Query("equation", "mifflin-st-jeor")
 
+	log.Debug().Str("equation", equation).Msg("Equation used")
+
 	if ctx.Queries() == nil {
 		return ctx.Status(400).SendString("Missing query parameters")
 	}
@@ -39,6 +42,8 @@ func HandleTdeeDaily(ctx *fiber.Ctx) error {
 	case "female":
 		tdee = GetFemaleTdee(GetWeightInKg(weightParam), GetHeightInCm(heightParam), ageParam, activityLevelParam, equation)
 	}
+
+	log.Debug().Float64("tdee", tdee).Msg("TDEE calculated")
 
 	return ctx.JSON(fiber.Map{
 		"maintenance_calories": math.Floor(tdee),

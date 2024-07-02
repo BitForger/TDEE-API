@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/rs/zerolog/log"
 	"math"
 	"strings"
 )
@@ -23,6 +24,8 @@ func GetHeightInCm(heightInInches float64) float64 {
 
 func GetMaleTdee(weightInKg, heightInCm float64, age int, activityLevel, equation string) float64 {
 	base := GetMaleBaseCalculation(weightInKg, heightInCm, age, equation)
+	log.Debug().Float64("base", base).Msg("Base calculated")
+
 	return base * ActivityLevels[strings.ToUpper(activityLevel)]
 }
 
@@ -42,7 +45,6 @@ func GetMaleBaseCalculation(weightInKg, heightInCm float64, age int, equation st
 	case "harris-benedict":
 		return math.Floor(655 + (9.6 * weightInKg) + (1.8 * heightInCm) - (4.7 * float64(age)))
 	case "mifflin-st-jeor":
-	default:
 		return math.Floor((10 * weightInKg) + (6.25 * heightInCm) - (5 * float64(age)) + 5)
 	}
 	return 0
@@ -59,7 +61,6 @@ func GetFemaleBaseCalculation(weightInKg, heightInCm float64, age int, equation 
 	case "harris-benedict":
 		return math.Floor(66 + (13.7 * weightInKg) + (5 * heightInCm) - (6.8 * float64(age)))
 	case "mifflin-st-jeor":
-	default:
 		return math.Floor((10 * weightInKg) + (6.25 * heightInCm) - (5 * float64(age)) - 161)
 	}
 	return 0
